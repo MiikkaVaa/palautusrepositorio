@@ -4,8 +4,6 @@ from player_reader import PlayerReader
 
 class StatisticsService:
     def __init__(self, reader):
-        reader = PlayerReader()
-
         self._players = reader.get_players()
 
     def search(self, name):
