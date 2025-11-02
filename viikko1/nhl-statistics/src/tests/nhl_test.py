@@ -1,5 +1,5 @@
 import unittest
-from statistics_service import StatisticsService
+from statistics_service import StatisticsService, SortBy
 from player import Player
 
 class  PlayerReaderStub:
@@ -37,5 +37,14 @@ class TestStatisticsService(unittest.TestCase):
         top_players = self.stats.top(2)
         self.assertEqual(top_players[0].name, "Gretzky")
         self.assertTrue(top_players[0].points >= top_players[1].points)
-        
-        
+
+    def test_top_pelaajat_maalien_perusteella(self):
+        top_players = self.stats.top(2, SortBy.GOALS)
+        self.assertEqual(top_players[0].name, "Lemieus")
+        self.assertEqual(top_players[1].name, "Yzerman")
+
+    def test_top_pelaajat_syottojen_perusteella(self):
+        top_players = self.stats.top(2, SortBy.ASSISTS)
+        self.assertEqual(top_players[0].name, "Gretzky")
+        self.assertEqual(top_players[1].name, "Yzerman")
+
