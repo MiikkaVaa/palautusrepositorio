@@ -4,7 +4,7 @@ from player_stats import PlayerStats
 def main():
     url = "https://studies.cs.helsinki.fi/nhlstats/2024-25/players"
     stats = PlayerStats(PlayerReader(url))
-    players = stats.top_scorers_by_nationality("FIN")
+    players = stats.top_scorers_by_nationality("USA")
 
     for player in players:
         print(player)
