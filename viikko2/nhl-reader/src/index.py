@@ -1,51 +1,59 @@
-from player_reader import PlayerReader
-from player_stats import PlayerStats
 from rich.console import Console
 from rich.table import Table
 from rich import box
 
-def _season_choices(start=2018, end=2026):
-    return "/".join(f"{y}-{(y+1)%100:02d}" for y in range(start,end))
-
-def main():
-    console = Console()
-    season_default = "2024-25"
-    season_choices = _season_choices()
-
-    season = console.input(
-        f"Season [[magenta]{season_choices}[/]] ([green]{season_default}[/]): "
-    ).strip() or season_default
+from player_reader import PlayerReader
+from player_stats import PlayerStats
 
 
-    url = f"https://studies.cs.helsinki.fi/nhlstats/{season}/players"
-    reader = PlayerReader(url)
-    stats = PlayerStats(reader)
+def _season_choices(start: int = 2018, end: int = 2026) -> str:
+    return "/".join(f"{y}-{(y + 1) % 100:02d}" for y in range(start, end))
 
-    nat_codes = sorted({p.nationality for p in reader.get_players()})
-    nat_list = "/".join(nat_codes)
-    nationality = console.input(
-        f"Nationality [[magenta]{nat_list}[/]]: "
-    ).strip().upper()
-    
-    players = stats.top_scorers_by_nationality(nationality)
 
-    table = Table(
-        title=f"Season {season} players from {nationality}",
-        box=box.SQUARE,
-        header_style="bold",
-    )
-    table.add_column("Released", style="cyan")
-    table.add_column("Team", style="magenta")
+def _ask_season(console: Console, default: str = "2024-25") -> str:
+    choices = _season_choices()
+    prompt = f"Season [[][magenta]{choices}[/][]] ([green]{default}[/]): "
+    return console.input(prompt).strip() or default
+
+
+def _ask_nationality(console: Console, reader: PlayerReader) -> str:
+    codes = sorted({p.nationality for p in reader.get_players()})
+    prompt = f"Nationality [[][magenta]{'/'.join(codes)}[/][]]: "
+    return console.input(prompt).strip().upper()
+
+
+def _build_table(title: str) -> Table:
+    table = Table(title=title, box=box.SQUARE, header_style="bold")
+    table.add_column("name", style="cyan")
+    table.add_column("team", style="magenta")
     table.add_column("goals", justify="right", style="green")
     table.add_column("assists", justify="right", style="green")
     table.add_column("points", justify="right", style="green")
+    return table
 
+
+def _render(console: Console, table: Table, players):
     for p in players:
         table.add_row(p.name, p.team, str(p.goals), str(p.assists), str(p.points))
-    
     console.print()
     console.print(table)
     console.print()
+
+
+def main() -> None:
+    console = Console()
+    season = _ask_season(console)
+
+    reader = PlayerReader(
+        f"https://studies.cs.helsinki.fi/nhlstats/{season}/players"
+    )
+    stats = PlayerStats(reader)
+
+    nationality = _ask_nationality(console, reader)
+    players = stats.top_scorers_by_nationality(nationality)
+
+    table = _build_table(f"Season {season} players from {nationality}")
+    _render(console, table, players)
 
 
 if __name__ == "__main__":

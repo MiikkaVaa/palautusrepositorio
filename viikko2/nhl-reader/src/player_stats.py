@@ -8,3 +8,6 @@ class PlayerStats:
         players_by_nationality = [player for player in players if player.nationality == nationality]
         players_by_nationality.sort(key=lambda p: p.points, reverse=True)
         return players_by_nationality
+
+    def exusemua(self):
+        print("plz")
