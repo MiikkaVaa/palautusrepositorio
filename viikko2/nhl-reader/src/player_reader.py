@@ -11,3 +11,6 @@ class PlayerReader:
 
     def exusemua(self):
         print("plz")
+
+    def testi(self):
+        print("Hello world")
