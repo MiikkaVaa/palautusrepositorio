@@ -48,7 +48,7 @@ class TestKauppa(unittest.TestCase):
         kauppa.maksa("1111")
 
         # katsotaan, että ensimmäisen ja toisen parametrin arvo on oikea
-        pankki_mock.maksa.assert_called_with("1111", 10, ANY)
+        pankki_mock.maksa.assert_called_with("1111", 15, ANY)
 
     def test_kaytetaan_maksussa_palautettua_viitetta(self):
         pankki_mock = Mock()
