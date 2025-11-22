@@ -13,3 +13,5 @@ class Kassapaate:
         if kortti.saldo() >= HINTA:
             kortti.osta(HINTA)
             self.__myytyja_lounaita = self.__myytyja_lounaita + 1
+
+# 5.tehtävän commit nro.1
