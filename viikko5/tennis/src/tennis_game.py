@@ -24,14 +24,9 @@ class TennisGame:
         raise ValueError(f"Invalid points: {points}")
     
     def tie_score_label(self, points):
-        if points == 0:
-            return "Love-All"
-        elif points == 1:
-            return "Fifteen-All"
-        elif points == 2:
-            return "Thirty-All"
-        else:
+        if points >= 3:
             return "Deuce"
+        return f"{self.point_label(points)}-All"
     
     def endgame_score_label(self):
         score_diff = self.player1_score - self.player2_score
