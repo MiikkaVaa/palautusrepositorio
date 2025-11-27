@@ -21,7 +21,7 @@ class TennisGame:
             return "Thirty"
         elif points == 3:
             return "Forty"
-        return ""
+        raise ValueError(f"Invalid points: {points}")
     
     def tie_score_label(self, points):
         if points == 0:
