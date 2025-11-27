@@ -18,5 +18,9 @@ class Kassapaate:
 # 5.tehtävän commit nro.2
 # 5.tehtävän commit nro.3
 # viikko 6 tehtävä 1 lisäys
+<<<<<<< HEAD
 # Eri muutos mainissa
 # uusi muutos mainissa
+=======
+# muutos haarassa
+>>>>>>> 3f24f91 (Lisätty haarassa muutos)
