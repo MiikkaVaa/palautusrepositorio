@@ -17,3 +17,4 @@ class Kassapaate:
 # 5.tehtävän commit nro.1
 # 5.tehtävän commit nro.2
 # 5.tehtävän commit nro.3
+# viikko 6 tehtävä 1 lisäys
